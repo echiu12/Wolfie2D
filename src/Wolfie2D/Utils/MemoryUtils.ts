@@ -1,4 +1,4 @@
-import Stack from "../DataTypes/Stack";
+import Stack from "../DataTypes/Collections/Stack";
 
 /** */
 export default class MemoryUtils {

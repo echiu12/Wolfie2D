@@ -1,4 +1,4 @@
-import Map from "../../DataTypes/Map";
+import Map from "../../DataTypes/Collections/Map";
 import GameNode from "../../Nodes/GameNode";
 import { AnimationState, TweenData } from "./AnimationTypes";
 import EaseFunctions from "../../Utils/EaseFunctions";

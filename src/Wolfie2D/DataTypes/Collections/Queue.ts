@@ -1,4 +1,4 @@
-import Collection from "./Collection";
+import Collection from "../Interfaces/Collection";
 
 /**
  * A FIFO queue with elements of type T

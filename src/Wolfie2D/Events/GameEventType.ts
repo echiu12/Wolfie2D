@@ -88,4 +88,19 @@ export enum GameEventType {
 	 * Encompasses all event types. Used for receivers only.
 	 */
 	ALL = "all",
+
+	/** 
+	 * Disables reveiving input from the user for the specified inputs. Has data: {inputs: InputHanlders[]}
+	 */
+	DISABLE_USER_INPUT = "disable_user_input",
+
+	/** 
+	 * Enables receiving input from the user for the specified inputs. Has data: {inputs: InputHandlers[]}
+	 */
+	ENABLE_USER_INPUT = "enable_user_input",
+
+	/**
+	 * Triggers a scene change. Has data: {scene: new (...args: any) => T extends Scene, init: Record<string, any>}
+	 */
+	CHANGE_SCENE = "change_scene"
 }

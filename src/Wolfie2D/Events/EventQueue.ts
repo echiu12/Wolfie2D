@@ -1,5 +1,5 @@
-import Queue from "../DataTypes/Queue";
-import Map from "../DataTypes/Map";
+import Queue from "../DataTypes/Collections/Queue";
+import Map from "../DataTypes/Collections/Map";
 import GameEvent from "./GameEvent";
 import Receiver from "./Receiver";
 import { GameEventType } from "./GameEventType";

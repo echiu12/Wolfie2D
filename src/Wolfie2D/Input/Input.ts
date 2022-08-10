@@ -1,5 +1,5 @@
 import Receiver from "../Events/Receiver";
-import Map from "../DataTypes/Map";
+import Map from "../DataTypes/Collections/Map";
 import Vec2 from "../DataTypes/Vec2";
 import EventQueue from "../Events/EventQueue";
 import Viewport from "../SceneGraph/Viewport";

@@ -1,4 +1,4 @@
-import Map from "../DataTypes/Map";
+import Map from "../DataTypes/Collections/Map";
 import CanvasNode from "../Nodes/CanvasNode";
 import Graphic from "../Nodes/Graphic";
 import Point from "../Nodes/Graphics/Point";
@@ -22,6 +22,8 @@ import Vec2 from "../DataTypes/Vec2";
 import Color from "../Utils/Color";
 import Line from "../Nodes/Graphics/Line";
 import Debug from "../Debug/Debug";
+import IsometricTilemap from "../Nodes/Tilemaps/IsometricTilemap";
+import StaggeredIsometricTilemap from "../Nodes/Tilemaps/StaggeredIsometricTilemap";
 
 /**
  * An implementation of the RenderingManager class using CanvasRenderingContext2D.
@@ -229,8 +231,26 @@ export default class CanvasRenderer extends RenderingManager {
 
     // @override
     protected renderTilemap(tilemap: Tilemap): void {
-        if(tilemap instanceof OrthogonalTilemap){
-            this.tilemapRenderer.renderOrthogonalTilemap(<OrthogonalTilemap>tilemap);
+        this.tilemapRenderer.renderTilemap(tilemap);
+        
+
+        switch(tilemap.constructor) {
+            case OrthogonalTilemap: {
+                console.log("Orthogonal");
+                break;
+            }
+            case IsometricTilemap: {
+                console.log("Isometric");
+                break;
+            }
+            case StaggeredIsometricTilemap: {
+                console.log("Staggered Isometric");
+                break;
+            }
+            default: {
+                throw new Error(`"${tilemap.constructor.name}" is not a valid type of tiliemap.`);
+            }
+
         }
     }
 

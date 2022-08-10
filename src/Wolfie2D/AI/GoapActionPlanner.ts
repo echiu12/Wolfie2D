@@ -1,8 +1,8 @@
 import Graph from "../DataTypes/Graphs/Graph";
 import GoapAction from "../DataTypes/Interfaces/GoapAction";
 import GoapAI from "../DataTypes/Interfaces/GoapAI";
-import Queue from "../DataTypes/Queue";
-import Stack from "../DataTypes/Stack";
+import Queue from "../DataTypes/Collections/Queue";
+import Stack from "../DataTypes/Collections/Stack";
 import GraphUtils from "../Utils/GraphUtils";
 
 export default class GoapActionPlanner {

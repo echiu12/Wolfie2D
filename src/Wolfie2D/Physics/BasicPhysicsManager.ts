@@ -321,21 +321,15 @@ export default class BasicPhysicsManager extends PhysicsManager {
 		let max = new Vec2(node.sweptRect.right, node.sweptRect.bottom);
 
 		// Convert the min/max x/y to the min and max row/col in the tilemap array
-		let minIndex = tilemap.getColRowAt(min);
-		let maxIndex = tilemap.getColRowAt(max);
-
-		let tileSize = tilemap.getTileSize();
+		let minIndex = tilemap.getMinColRow(min, max);
+		let maxIndex = tilemap.getMaxColRow(min, max);
 
 		// Loop over all possible tiles (which isn't many in the scope of the velocity per frame)
 		for(let col = minIndex.x; col <= maxIndex.x; col++){
 			for(let row = minIndex.y; row <= maxIndex.y; row++){
 				if(tilemap.isTileCollidable(col, row)){
-					// Get the position of this tile
-					let tilePos = new Vec2(col * tileSize.x + tileSize.x/2, row * tileSize.y + tileSize.y/2);
-
 					// Create a new collider for this tile
-					let collider = new AABB(tilePos, tileSize.scaled(1/2));
-
+					let collider = tilemap.getTileCollider(col, row);
 					// Calculate collision area between the node and the tile
 					let area = node.sweptRect.overlapArea(collider);
 					if(area > 0){

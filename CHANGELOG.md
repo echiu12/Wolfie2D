@@ -7,8 +7,19 @@ The changelog for Wolfie2D is based on the [this](https://keepachangelog.com/en/
 
 ## v0.3.0 - 01-01-23
 ### Added
-* Added `StaggeredIsometricTilemap` class. This class officially adds support for isometric tilemaps in Wolfie2D.
+* Added 
+* Added `StaggeredIsometricTilemap` class. This class officially adds support for staggered-isometric tilemaps in Wolfie2D.
 * Added `TilemapOrientation` enum to the `TilemapFactory` class. 
+* Added `IsometricTilemap` class. This class is incomplete for now.
+* Added `astar` function to `GraphUtils.ts`. This function officially adds support for pathfinding wiith A* to Wolfie2D
+* `LICENSE.md`
+* `CHANGELOG.md`
+* `BinaryHeapSet.ts`
+* A testing framework, `ts-jest`, and sample unit tests for the `List.ts` class
+* Scripts to `scripts` in `package.json`. This includes
+    * `build` - compiles and builds the game-engine
+    * `test` - runs ts-jest unit tests
+* Compiler options to `tsconfig.json`
 
 ### Changes
 * Several methods exposed by the OrthogonalTilemap class have been move up to the Tilemap class, including:
@@ -26,25 +37,8 @@ The changelog for Wolfie2D is based on the [this](https://keepachangelog.com/en/
   - getMinColRow and getMaxColRow to determine which tiles to check for collisions
   - getTileCollider(col, row) to get the collision shape for a tile in a tilemap
 * Replaced `renderOrthogonalTilemap` method with `renderTilemap` method inside of the `TilemapRenderer` class. 
-
-
-## v0.2.1 - 07-11-2022
-### Added
-* `LICENSE.md`
-* `CHANGELOG.md`
-* `BinaryHeapSet.ts`
-* An implementation of the A* algorithm (see GraphUtils)
-* A testing framework, `ts-jest`, and sample unit tests for the `List.ts` class
-* Scripts to `scripts` in `package.json`. This includes
-    * `build` - compiles and builds the game-engine
-    * `test` - runs ts-jest unit tests
-* Compiler options to `tsconfig.json`
-* CI workflow for running the unit tests
-
-### Changes
-* Moved Wolfie2D project to the Wolfie2D organization account on Github
 * Moved `Collection.ts` to `Interfaces` folder
-* Moved all datatypes implementing `Collection` to `Collections` folder. This includes
+* Moved all datatypes implementing the `Collection` interface to `Collections` folder. This includes
     * BinaryHeapSet.ts
     * List.ts
     * Map.ts
@@ -52,6 +46,8 @@ The changelog for Wolfie2D is based on the [this](https://keepachangelog.com/en/
     * Queue.ts
     * RegionQuadTree.ts
     * Stack.ts
+* Moved Wolfie2D project to the Wolfie2D organization account on Github
+
 
 ## v0.2.0 - 05-20-2022
 Wolfie2D v0.2.0 includes additions to the game-engine that were made by Zach Grandison from May 2021 - May 2022. 

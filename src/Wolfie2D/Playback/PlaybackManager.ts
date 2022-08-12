@@ -2,24 +2,28 @@ import Updateable from "../DataTypes/Interfaces/Updateable";
 import GameEvent from "../Events/GameEvent";
 import { GameEventType } from "../Events/GameEventType";
 import Receiver from "../Events/Receiver";
-import Recorder from "./Recorder";
-import Recording from "./Recording";
-import Replayer from "./Replayer";
+
+import AbstractReplayer from "../DataTypes/Playback/Abstract/AbstractReplayer";
+import AbstractLogItem from "../DataTypes/Playback/Abstract/AbstractLogItem";
+import AbstractRecording from "../DataTypes/Playback/Abstract/AbstractRecording";
+import AbstractRecorder from "../DataTypes/Playback/Abstract/AbstractRecorder";
 
 export default class PlaybackManager implements Updateable {
 
-    protected recorder: Recorder;
+    protected recorder: AbstractRecorder<AbstractRecording<AbstractLogItem>, AbstractLogItem>;
     protected recording: boolean;
 
-    protected replayer: Replayer;
+    protected replayer: AbstractReplayer<AbstractRecording<AbstractLogItem>, AbstractLogItem>;
     protected playing: boolean;
+
+    protected lastRecording: AbstractRecording<AbstractLogItem>;
 
     protected receiver: Receiver;
 
     constructor() {
-        this.recorder = new Recorder();
-        this.replayer = new Replayer();
-
+        this.recording = false;
+        this.playing = false;
+        
         this.receiver = new Receiver();
         this.receiver.subscribe([GameEventType.START_RECORDING, GameEventType.STOP_RECORDING, GameEventType.PLAY_RECORDING]);
     }
@@ -28,13 +32,16 @@ export default class PlaybackManager implements Updateable {
         while (this.receiver.hasNextEvent()) {
             this.handleEvent(this.receiver.getNextEvent());
         }
-        this.recorder.update(deltaT);
-        this.replayer.update(deltaT);
 
-        this.playing = this.replayer.active;
-        this.recording = this.recorder.active;
+        if (this.recorder !== undefined) {
+            this.recorder.update(deltaT);
+            this.recording = this.recorder.active();
+        }
+        if (this.replayer !== undefined) {
+            this.replayer.update(deltaT);
+            this.playing = this.replayer.active();
+        }
     }
-
 
     protected handleEvent(event: GameEvent): void {
         switch(event.type) {
@@ -53,21 +60,29 @@ export default class PlaybackManager implements Updateable {
         }
     }
     protected handleStartRecordingEvent(event: GameEvent): void {
-        if (!this.playing) {
-            this.recorder.startRecording(
-                event.data.get("scene"), event.data.get("init"), event.data.get("seed"), event.data.get("size")
-            );
-            this.recording = this.recorder.active;
+        let recording = event.data.get("recording");
+        if (!this.playing && !this.recording && recording !== undefined) {
+            this.lastRecording = recording;
+            let Recorder: new (...args: any[]) => AbstractRecorder<AbstractRecording<AbstractLogItem>, AbstractLogItem> = this.lastRecording.recorder();
+            if (this.recorder === undefined || this.recorder.constructor !== Recorder) {
+                this.recorder = new Recorder();
+            }
+            this.recorder.start(this.lastRecording);
+            this.recording = this.recorder.active();
         }
     }
     protected handleStopRecordingEvent(): void {
-        this.recorder.stopRecording();
-        this.recording = this.recorder.active;
+        this.recorder.stop();
+        this.recording = this.recorder.active();
     }
     protected handlePlayRecordingEvent(event: GameEvent): void {
-        if (!this.recording) {
-            this.replayer.startReplay(this.recorder.recording, event.data.get("onEnd"));
-            this.playing = this.replayer.active;
+        if (!this.recording && this.lastRecording !== undefined) {
+            let Replayer: new (...args: any[]) => AbstractReplayer<AbstractRecording<AbstractLogItem>, AbstractLogItem> = this.lastRecording.replayer();
+            if (this.replayer === undefined || this.replayer.constructor !== Replayer) {
+                this.replayer = new Replayer();
+            }
+            this.replayer.start(this.lastRecording, event.data.get("onEnd"));
+            this.playing = this.replayer.active();
         }
     }
 }

@@ -1,12 +1,5 @@
 import Game from "./Wolfie2D/Loop/Game";
 import default_scene from "./default_scene";
-import default_scene2 from "./default_scene2";
-// import test from "./test.json";
-import { TiledTilemapData } from "./Wolfie2D/DataTypes/Tilesets/TiledData";
-import IsometricTilemap from "./Wolfie2D/Nodes/Tilemaps/IsometricTilemap";
-import Vec2 from "./Wolfie2D/DataTypes/Vec2";
-import Tileset from "./Wolfie2D/DataTypes/Tilesets/Tileset";
-import Platformer from "./demos/Platformer";
 
 // The main function is your entrypoint into Wolfie2D. Specify your first scene and any options here.
 (function main(){

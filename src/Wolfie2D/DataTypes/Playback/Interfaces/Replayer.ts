@@ -2,6 +2,10 @@ import Updateable from "../../Interfaces/Updateable";
 import LogItem from "./LogItem";
 import Recording from "./Recording";
 
+/**
+ * An interface defining a set of methods to be exposed by a Replayer type.
+ * @author Peter Walsh
+ */
 export default interface Replayer<T extends Recording<E>, E extends LogItem> extends Updateable {
     /**
      * @return true if this Replayer is playing a recording; false otherwise.

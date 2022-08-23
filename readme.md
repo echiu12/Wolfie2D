@@ -6,6 +6,10 @@ A 2D game-engine for creating web-based games..
 [![CI](https://github.com/Test123938/Test2/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Test123938/Test2/actions/workflows/ci.yml)
 <img src="https://img.shields.io/website?url=https%3A%2F%2Ftest123938.github.io%2FTest2"></img>
 
+## Contributors
+<a href="https://github.com/WolfieEngine/Wolfie2D/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=WolfieEngine/Wolfie2D" />
+</a>
 
 ## Documentation
 For more complete documentation on how to use and get setup with Wolfie2D, check out the official Wolfie2D [website](https://wolfieengine.github.io/Wolfie2D-website/). This includes

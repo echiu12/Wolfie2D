@@ -4,6 +4,7 @@ import { TiledTilemapData, TiledLayerData } from "../DataTypes/Tilesets/TiledDat
 import CanvasNode from "./CanvasNode";
 import PhysicsManager from "../Physics/PhysicsManager";
 import Shape from "../DataTypes/Shapes/Shape";
+import AABB from "../DataTypes/Shapes/AABB";
 
 /**
  * The representation of a tilemap - this can consist of a combination of tilesets in one layer
@@ -189,7 +190,7 @@ export default abstract class Tilemap extends CanvasNode {
      * @param upperLeft the upper left corner of the region
      * @param bottomRight the bottom right corner of the region
      */
-    public abstract getMinColRow(upperLeft: Vec2, bottomRight: Vec2): Vec2;
+    public abstract getMinColRow(region: AABB): Vec2;
 
     /**
      * Gets the column and row position of the last tile in the region. This method gets called 
@@ -197,7 +198,12 @@ export default abstract class Tilemap extends CanvasNode {
      * @param upperLeft the upper left corner of the region
      * @param bottomRight the bottom right corner of the region
      */
-    public abstract getMaxColRow(upperLeft: Vec2, bottomRight: Vec2): Vec2;
+    public abstract getMaxColRow(region: AABB): Vec2;
 
+    /**
+     * Sets up the tileset using the data loaded from file
+     * @param tilemapData The tilemap data from file
+     * @param layer The layer data from file
+     */
     protected abstract parseTilemapData(tilemapData: TiledTilemapData, layer: TiledLayerData): void;
 }

@@ -10,11 +10,11 @@ import AABB from "../../DataTypes/Shapes/AABB";
  */
 export default class OrthogonalTilemap extends Tilemap {
 
-    public override getMinColRow(upperLeft: Vec2, bottomRight: Vec2): Vec2 {
-        return this.getTilemapPosition(upperLeft.x, upperLeft.y);
+    public override getMinColRow(region: AABB): Vec2 {
+        return this.getTilemapPosition(region.topLeft.x, region.topLeft.y);
     }
-    public override getMaxColRow(origin: Vec2, bottomRight: Vec2): Vec2 {
-        return this.getTilemapPosition(bottomRight.x, bottomRight.y);
+    public override getMaxColRow(region: AABB): Vec2 {
+        return this.getTilemapPosition(region.bottomRight.x, region.bottomRight.y);
     }
 
     public override getTilemapPosition(x: number, y: number): Vec2 {

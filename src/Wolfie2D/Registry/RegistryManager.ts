@@ -1,4 +1,4 @@
-import Map from "../DataTypes/Map";
+import Map from "../DataTypes/Collections/Map";
 import Registry from "./Registries/Registry";
 import ShaderRegistry from "./Registries/ShaderRegistry";
 

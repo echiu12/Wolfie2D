@@ -1,4 +1,4 @@
-import Map from "../DataTypes/Map";
+import Map from "../DataTypes/Collections/Map";
 import Receiver from "../Events/Receiver";
 import ResourceManager from "../ResourceManager/ResourceManager";
 import { GameEventType } from "../Events/GameEventType";

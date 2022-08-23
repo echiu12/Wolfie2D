@@ -1,4 +1,4 @@
-import Stack from "../DataTypes/Stack";
+import Stack from "../DataTypes/Collections/Stack";
 import Vec2 from "../DataTypes/Vec2";
 import GameNode from "../Nodes/GameNode";
 

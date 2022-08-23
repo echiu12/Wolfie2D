@@ -1,4 +1,4 @@
-import Map from "../DataTypes/Map";
+import Map from "../DataTypes/Collections/Map";
 import Vec2 from "../DataTypes/Vec2";
 import GameNode from "../Nodes/GameNode";
 import Color from "../Utils/Color";

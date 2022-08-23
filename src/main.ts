@@ -1,4 +1,3 @@
-
 import Game from "./Wolfie2D/Loop/Game";
 import default_scene from "./default_scene";
 
@@ -11,6 +10,12 @@ import default_scene from "./default_scene";
     let options = {
         canvasSize: {x: 1200, y: 800},          // The size of the game
         clearColor: {r: 0, g: 0, b: 0},   // The color the game clears to
+        inputs: [
+            {name: "left", keys: ["a"]},
+            {name: "right", keys: ["d"]},
+            {name: "jump", keys: ["w", "space"]},
+            {name: "run", keys: ["shift"]}
+        ],
     }
 
     // Create a game with the options specified
@@ -18,6 +23,7 @@ import default_scene from "./default_scene";
 
     // Start our game
     game.start(default_scene, {});
+
 })();
 
 function runTests(){};

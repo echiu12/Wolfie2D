@@ -1,8 +1,8 @@
 import GoapActionPlanner from "../../AI/GoapActionPlanner";
 import GameEvent from "../../Events/GameEvent";
 import GameNode from "../../Nodes/GameNode";
-import Queue from "../Queue";
-import Stack from "../Stack";
+import Queue from "../Collections/Queue";
+import Stack from "../Collections/Stack";
 import GoapAction from "./GoapAction";
 import Updateable from "./Updateable";
 

@@ -16,14 +16,11 @@ export default class EventRecording extends AbstractRecording<EventLogItem> {
     private _scene: new (...args: any) => Scene;
     /** The state of the initial scene that the recording starts from. */
     private _init: Record<string, any>;
-    /** The random seed used for this recording */
-    private _seed: string;
 
-    public constructor(scene: new (...args: any) => Scene, init: Record<string, any> = {}, seed: string = RandUtils.seed, capacity: number = 100) {
+    public constructor(scene: new (...args: any) => Scene, init: Record<string, any> = {}, capacity: number = 100) {
         super(capacity);
         this._scene = scene;
         this._init = init;
-        this._seed = seed;
     }
 
     public override recorder(): new (...args: any[]) => EventRecorder { return EventRecorder; }
@@ -31,6 +28,4 @@ export default class EventRecording extends AbstractRecording<EventLogItem> {
     
     public scene(): new (...args: any) => Scene { return this._scene; }
     public init(): Record<string, any> { return this._init; }
-    public seed(): string { return this._seed; }
-
 }

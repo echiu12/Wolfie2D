@@ -13,11 +13,11 @@ export default class StaggeredIsometricTilemap extends Tilemap {
 
     public override getTilemapPosition(x: number, y: number): Vec2 {
         let col = x / this.tileSize.x / this.scale.x;
-        let row = y / this.tileSize.y / this.scale.y * 2;
+        let row = Math.floor(y / this.tileSize.y / this.scale.y * 2);
         if (row % 2 !== 0) {
-            col -= this.tileSize.x * this.scale.x / 2;
+            col = (x - this.tileSize.x / this.scale.x / 2) / this.tileSize.x / this.scale.x;
         }
-        return new Vec2(Math.floor(col), Math.floor(row));
+        return new Vec2(Math.floor(col), row);
     }
 
     public override getWorldPosition(col: number, row: number): Vec2 {
@@ -45,20 +45,12 @@ export default class StaggeredIsometricTilemap extends Tilemap {
         return new AABB(center, halfSize);
     }
 
-    public override getMinColRow(origin: Vec2, bottomRight: Vec2): Vec2 {
-        let col = Math.floor(origin.x / this.tileSize.x / this.scale.x) - 1;
-        let row = Math.floor(origin.y / this.tileSize.y / this.scale.y) - 1;
-        col = MathUtils.clamp(col, 0, this.numCols);
-        row = MathUtils.clamp(row, 0, this.numRows);
-        return new Vec2(col, row);
+    public override getMinColRow(region: AABB): Vec2 {
+        return new Vec2(0, 0);
     }   
 
-    public override getMaxColRow(origin: Vec2, bottomRight: Vec2): Vec2 {
-        let col = Math.floor(bottomRight.x / this.tileSize.x / this.scale.x) + 1;
-        let row = Math.floor(bottomRight.y / this.tileSize.y / this.scale.y) + 1;
-        col = MathUtils.clamp(col, 0, this.numCols);
-        row = MathUtils.clamp(row, 0, this.numRows);
-        return new Vec2(col, row);
+    public override getMaxColRow(region: AABB): Vec2 {
+        return new Vec2(this.numCols, this.numRows);
     }
 
     protected parseTilemapData(tilemapData: TiledTilemapData, layer: TiledLayerData): void {

@@ -40,7 +40,7 @@ export enum GameEventType {
 	WHEEL_DOWN = "wheel_down",
 
 	/**
-	 * Start Recording event. Has data: {}
+	 * Start Recording event. Has data: {recording: AbstractRecording}
 	 */
 	START_RECORDING = "start_recording",
 

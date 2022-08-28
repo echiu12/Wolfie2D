@@ -33,8 +33,6 @@ jobs:
 
       # Checkout the branch
       - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref_name }}
 
       # Run the unit tests
       - name: Unit Tests

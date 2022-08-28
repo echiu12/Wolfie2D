@@ -3,7 +3,7 @@ A 2D game-engine for creating web-based games..
 
 <img src="https://img.shields.io/github/package-json/v/Test123938/Test2"></img> 
 <img src="https://img.shields.io/github/license/Test123938/Test2"></img>
-[![CI](https://github.com/WolfieEngine/Wolfie2D/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/WolfieEngine/Wolfie2D/actions/workflows/CI.yml)
+[![CI](https://github.com/WolfieEngine/Wolfie2D/actions/workflows/CI.yml/badge.svg?event=push)](https://github.com/WolfieEngine/Wolfie2D/actions/workflows/CI.yml)
 <img src="https://img.shields.io/website?url=https%3A%2F%2Ftest123938.github.io%2FTest2"></img>
 
 ## Contributors

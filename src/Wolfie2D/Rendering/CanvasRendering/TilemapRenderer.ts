@@ -42,45 +42,8 @@ export default class TilemapRenderer {
         let bottomRight = origin.clone().add(size.scaled(2*zoom));
 
         if(tilemap.visible){
-            let minColRow = tilemap.getMinColRow(origin, bottomRight);
-            let maxColRow = tilemap.getMaxColRow(origin, bottomRight);
-
-            for(let row = minColRow.y; row <= maxColRow.y; row++){
-                for(let col = minColRow.x; col <= maxColRow.x; col++){
-                    // Get the tile at this position
-                    let tile = tilemap.getTile(col, row);
-
-                    // Extract the rot/flip parameters if there are any
-                    const mask = (0xE << 28);
-                    const rotFlip = ((mask & tile) >> 28) & 0xF;
-                    tile = tile & ~mask;
-
-                    // Find the tileset that owns this tile index and render
-                    for(let tileset of tilemap.getTilesets()){
-                        if(tileset.hasTile(tile)){
-                            this.renderTile(tilemap, tileset, tile, col, row, origin, tilemap.scale, zoom, rotFlip);
-                        }
-                    }
-                }
-            }
-        }
-
-        this.ctx.globalAlpha = previousAlpha;
-    }
-
-    renderStaggeredIsometricTilemap(tilemap: StaggeredIsometricTilemap) : void {
-        let previousAlpha = this.ctx.globalAlpha;
-        this.ctx.globalAlpha = tilemap.getLayer().getAlpha();
-        
-        let origin = this.scene.getViewTranslation(tilemap);
-        let size = this.scene.getViewport().getHalfSize();
-        let zoom = this.scene.getViewScale();
-        let bottomRight = origin.clone().add(size.scaled(2*zoom));
-
-        if(tilemap.visible){
-            let minColRow = tilemap.getMinColRow(origin, bottomRight);
-            let maxColRow = tilemap.getMaxColRow(origin, bottomRight);
-
+            let minColRow = tilemap.getMinColRow(this.scene.getViewport().getView());
+            let maxColRow = tilemap.getMaxColRow(this.scene.getViewport().getView());
             for(let row = minColRow.y; row <= maxColRow.y; row++){
                 for(let col = minColRow.x; col <= maxColRow.x; col++){
                     // Get the tile at this position
@@ -128,7 +91,8 @@ export default class TilemapRenderer {
         let top = imagePosition.y;
 
         // Calculate the position in the world to render the tile
-        let worldPosition = tilemap.getWorldPosition(tilemapCol, tilemapRow);
+        let worldPosition = this.getIsometricTileDrawPos(tilemap, tileset, tilemapCol, tilemapRow);
+
         let worldX = Math.floor((worldPosition.x - origin.x)*zoom);
         let worldY = Math.floor((worldPosition.y - origin.y)*zoom);
 
@@ -181,7 +145,19 @@ export default class TilemapRenderer {
                 worldX, worldY,
                 worldWidth, worldHeight);
         }
+    }
 
 
+    protected getOrthogonalTileDrawPos(map: OrthogonalTilemap, set: Tileset, col: number, row: number): Vec2 {
+        let imgsize: Vec2 = set.getTileSize().mult(map.scale);
+        let mapsize: Vec2 = map.getScaledTileSize();
+        return map.getWorldPosition(col, row).sub(imgsize.sub(mapsize));
+    }
+    protected getIsometricTileDrawPos(map: Tilemap, set: Tileset, col: number, row: number): Vec2 {
+        let size: Vec2 = set.getTileSize();
+        let drawPos: Vec2 = map.getScaledTileSize().sub(new Vec2(size.x*map.scale.x, size.y*map.scale.y));
+        drawPos.inc(-size.x*map.scale.x/2, 0);
+        drawPos.add(map.getWorldPosition(col, row));
+        return drawPos;
     }
 }

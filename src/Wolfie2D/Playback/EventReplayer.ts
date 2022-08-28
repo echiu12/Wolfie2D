@@ -57,14 +57,13 @@ export default class EventReplayer extends AbstractReplayer<EventRecording, Even
         this.recording = recording;
         this.onEnd = onEnd;
 
-        // Set the random seed to the seed of the recording
-        RandUtils.seed = this.recording.seed();
         // Disable all user inputs from the screen
         this.emitter.fireEvent(GameEventType.DISABLE_USER_INPUT, {inputs: [
             InputHandlers.MOUSE_DOWN, InputHandlers.MOUSE_UP, InputHandlers.CONTEXT_MENU, 
             InputHandlers.MOUSE_MOVE, InputHandlers.KEY_DOWN, InputHandlers.KEY_UP, 
             InputHandlers.ON_BLUR, InputHandlers.ON_WHEEL
         ]});
+        
         // Change the scene to the initial
         this.emitter.fireEvent(GameEventType.CHANGE_SCENE, {scene: this.recording.scene(), init: this.recording.init()});
     

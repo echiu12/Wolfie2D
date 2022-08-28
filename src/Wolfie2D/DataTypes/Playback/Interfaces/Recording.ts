@@ -12,7 +12,9 @@ import Replayer from "./Replayer";
  */
 export default interface Recording<T extends LogItem> extends Collection {
 
-    /** Returns the type of Recorder used to record this type of Recording */
+    /** 
+     * @return the type of Recorder used to record this type of Recording
+     */
     recorder(): new (...args: any) => Recorder<Recording<T>, T>
 
     /** 
@@ -47,4 +49,9 @@ export default interface Recording<T extends LogItem> extends Collection {
      * @return the LogItem at the start of the recording
      */
     dequeue(): T;
+
+    /** 
+     * @return the maximum number of LogItems that this Recording can hold
+     */
+    capacity(): number;
 }

@@ -63,6 +63,15 @@ export default class GraphUtils {
 
 	}
 
+	/**
+	 * An implementation of the A* algorithm
+	 * @param g the graph to search
+	 * @param start the node in the graph, g, to start searching from
+	 * @param goal the node in the graph, g, that A* should try to reach
+	 * @param heuristic the heuristic function used to calculate the f-score of a node in the graph, g
+	 * @return if a path between start and goal exists, an array of nodes representing the path from start 
+	 * to goal found by A*; otherwise null
+	 */
 	static astar(g: Graph, start: number, goal: number, heuristic: (node: number) => number): Array<number> {
 
 		// Construct a new map of the gScores - start gets a gScore of 0
@@ -73,7 +82,7 @@ export default class GraphUtils {
 		let fScore = new Map<number, number>();
 		fScore.set(start, heuristic(start));
 
-		
+		// Construct a new map to hold the path from start to goal
 		let cameFrom = new Map<number, number>();
 
 		// The open-set of nodes to be explored. Starts off with just starting node

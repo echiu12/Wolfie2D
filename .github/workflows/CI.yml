@@ -1,0 +1,45 @@
+# A workflow for running CI on Wolfie2D
+
+name: CI
+
+# CI tests should be triggered whenever we make a push, be that to
+# main or the development branch. 
+
+on: [workflow_call, push, pull_request]
+
+jobs:
+
+  # First, we check that the project compiles/builds successfully
+  Compile:
+    runs-on: ubuntu-latest
+    steps: 
+
+      # Checkout the branch we want to run 
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref_name }}
+
+      # Build the game engine
+      - name: Compile Test
+        run: |
+          npm install
+          npm run compile
+          
+  # Next, check that the out unit tests are passing
+  Test: 
+    runs-on: ubuntu-latest
+    # This is how we require that Test runs only if Compile is successful
+    needs: Compile
+
+    steps:
+
+      # Checkout the branch
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref_name }}
+
+      # Run the unit tests
+      - name: Unit Tests
+        run: |
+          npm install 
+          npm run test

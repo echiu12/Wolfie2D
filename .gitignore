@@ -10,6 +10,9 @@ dist/*
 # Include the built-in asset folder
 !dist/builtin/
 
+# Ignore VSCode settings
+.vscode
+
 ### IF YOU ARE MAKING A PROJECT, YOU MAY WANT TO UNCOMMENT THIS LINE ###
 # !dist/assets/
 

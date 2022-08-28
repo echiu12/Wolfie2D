@@ -5,7 +5,7 @@ name: CI
 # CI tests should be triggered whenever we make a push, be that to
 # main or the development branch. 
 
-on: [workflow_call, push, pull_request]
+on: [workflow_call, workflow_dispatch, push, pull_request]
 
 jobs:
 

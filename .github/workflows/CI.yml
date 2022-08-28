@@ -16,8 +16,6 @@ jobs:
 
       # Checkout the branch we want to run 
       - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref_name }}
 
       # Build the game engine
       - name: Compile Test

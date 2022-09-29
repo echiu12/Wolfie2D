@@ -22,8 +22,11 @@ export default class GoapActionPlanner {
         this.mapping.set(1,"Goal");
         this.graph.addEdge(1,1,Number.POSITIVE_INFINITY);
 
-        //Build tree from 0 to 1
-        this.buildTree(0, goal, possibleActions, currentStatus);
+        // Build tree from the root (node at index 0) to the goal (node at index 1)
+        // Throw an error if the tree doesn't have at least one route from the root to the goal
+        if (!this.buildTree(0, goal, possibleActions, currentStatus)) {
+            throw new Error("No path between root and goal found.");
+        }
 
         //Run djikstra to find shortest path
         this.path = GraphUtils.djikstra(this.graph, 0);
@@ -42,11 +45,20 @@ export default class GoapActionPlanner {
         return plan;
     }
 
-    buildTree(root: number, goal:string, possibleActions: Array<GoapAction>, currentStatus: Array<string>): void {
+    /** 
+     * Builds the tree of possible GoapActions and stores the tree into the graph field. 
+     * @param root The index of the graph node that will be the root of the tree
+     * @param goal The string representing the goal status
+     * @param possibleActions The list of GoapActions that can be performed
+     * @param currentStatus The list of current statuses
+     * @returns True if tree has a connection between root and goal; false otherwise.
+     */
+    buildTree(root: number, goal:string, possibleActions: Array<GoapAction>, currentStatus: Array<string>): boolean {
+        let reachedGoal = false;
         //For each possible action 
-        possibleActions.forEach(action => {
+        for (let action of possibleActions) {
             //Can it be performed?
-            if (action.checkPreconditions(currentStatus)){
+            if (action.checkPreconditions(currentStatus)) {
                 //This action can be performed
                 //Add effects to currentStatus
                 let newStatus = [...currentStatus];
@@ -58,7 +70,7 @@ export default class GoapActionPlanner {
                     this.mapping.set(newNode, action);
                     this.graph.addEdge(root, newNode, action.cost);
                     this.graph.addEdge(newNode, 1, 0);
-                    return;
+                    return true;
                 }
 
                 //Add node and edge from root
@@ -67,9 +79,10 @@ export default class GoapActionPlanner {
                 this.graph.addEdge(root, newNode, action.cost);
                 
                 //Recursive call
-                let newActions = possibleActions.filter(act => act !== action)
-                this.buildTree(newNode, goal, newActions, action.effects);
+                let newActions = possibleActions.filter(act => act !== action);
+                reachedGoal = reachedGoal || this.buildTree(newNode, goal, newActions, action.effects);
             }
-        });
+        }
+        return reachedGoal;
     }
 }

@@ -25,6 +25,9 @@ export default class GoapActionPlanner {
         // Build tree from the root (node at index 0) to the goal (node at index 1)
         // Throw an error if the tree doesn't have at least one route from the root to the goal
         if (!this.buildTree(0, goal, possibleActions, currentStatus)) {
+            // Generate the tree string to assist in debugging.
+            // The "====>" symbol indicates that the AI can transition between from one state/action to another.
+            // The error below is thrown because there is no series of transitions that takes you from Start to Goal.
             let treeStr = "";
             for(let i = 0; i < this.graph.numVertices; i++){
                 let edge = this.graph.edges[i];
@@ -35,7 +38,6 @@ export default class GoapActionPlanner {
                 }
                 treeStr += this.mapping.get(i).toString() + " ====> " + edgeStr + "\n";
             }
-
             throw new Error("No path between root (start) and goal was found in the GOAP tree.\n" + treeStr);
         }
 

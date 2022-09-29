@@ -25,7 +25,18 @@ export default class GoapActionPlanner {
         // Build tree from the root (node at index 0) to the goal (node at index 1)
         // Throw an error if the tree doesn't have at least one route from the root to the goal
         if (!this.buildTree(0, goal, possibleActions, currentStatus)) {
-            throw new Error("No path between root and goal found.");
+            let treeStr = "";
+            for(let i = 0; i < this.graph.numVertices; i++){
+                let edge = this.graph.edges[i];
+                let edgeStr = "";
+                while(edge !== undefined && edge !== null){
+                    edgeStr += this.mapping.get(edge.y).toString() + ", ";
+                    edge = edge.next;
+                }
+                treeStr += this.mapping.get(i).toString() + " ====> " + edgeStr + "\n";
+            }
+
+            throw new Error("No path between root (start) and goal was found in the GOAP tree.\n" + treeStr);
         }
 
         //Run djikstra to find shortest path
